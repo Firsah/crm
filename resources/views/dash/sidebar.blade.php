@@ -65,9 +65,16 @@
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="{{ route('index')}}">
+      <a class="nav-link" href="{{ route('admin.index')}}">
         <i class="mdi mdi-grid-large menu-icon"></i>
         <span class="menu-title">Dashboard</span>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('auth.listUser') }}">
+        <i class="menu-icon mdi mdi-account-circle-outline""></i>
+        <span class="menu-title">Data User</span>
       </a>
     </li>
   </ul>

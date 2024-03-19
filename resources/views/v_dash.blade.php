@@ -163,9 +163,7 @@
                           <button class="btn btn-success btn-lg text-white mb-0 me-0" type="button" data-bs-toggle="modal" data-bs-target="#formSettingsMinPembelian"><i class="fa-solid fa-gear" style="margin-right: 8px;"></i>Min Pembelian</button>
                       </div>
                       <div>
-                          <a href="{{ route('index') }}" class="btn btn-warning btn-lg text-white"><i class="fa-solid fa-arrows-rotate" style="margin-right: 8px;"></i>Refresh</a>
-                          <!-- <button class="btn btn-warning btn-lg text-white mb-0 me-0" type="button"><a href="{{ route('index') }}">Refresh</a></button> -->
-                          
+                          <a href="{{ route('admin.index') }}" class="btn btn-warning btn-lg text-white"><i class="fa-solid fa-arrows-rotate" style="margin-right: 8px;"></i>Refresh</a>      
                       </div>
                      </div>
                      <br>

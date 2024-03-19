@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            $table->date('Tanggal');
-            $table->string('Nama');
-            $table->string('Alamat');
-            $table->string('Produk');
-            $table->string('No Telp',15);
-            $table->integer('Quantity');
-            $table->decimal('Harga',10,2);
-            $table->decimal('Total',10,2);
+            $table->date('tanggal');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('produk');
+            $table->string('no_telp',15);
+            $table->integer('quantity');
+            $table->decimal('harga',10,2);
+            $table->decimal('total',10,2);
             $table->timestamps();
         });
     }

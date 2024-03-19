@@ -94,7 +94,7 @@ class uploadExcelController extends Controller
         Excel::import(new DataPenjualanImportClass ,public_path('excel/'.$originName));
         
 
-        return redirect()->route('index')->with('success','Data Behasil Diimport!!');
+        return redirect()->route('admin.index')->with('success','Data Behasil Diimport!!');
     }
 
     public  function delete_all(){
@@ -176,9 +176,9 @@ class uploadExcelController extends Controller
 
             //Gabungkan data kemunculan produk dengan nama produk yang telah ditentukan
             $combineData = [];
-             foreach( $namaProduk as  $np){
+            foreach( $namaProduk as  $np){
                 $combineData[$np] = $produkCount->get($np,0);
-             }
+            }
  
         // dd($finalData);
         return view('v_dash',['jdl'=> $jdl,'finalData' => $finalData,'data' => $data,'combineData' => $combineData]);
