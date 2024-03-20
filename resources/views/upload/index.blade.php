@@ -42,35 +42,20 @@
                 </div> -->
           <div class="tab-content tab-content-basic">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-              <!-- Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-produk">
-                    @foreach($combineData as $produk => $count)
-                    <div class="card-produk-info">
-                      <p class="statistics-title">{{ $produk }}</p>
-                      <h3 class="rate-percentage"> {{ $count }}</h3>
-                    </div>
-                    @endforeach
-                  </div>
-                </div>
-              </div>
-              <!-- //Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
-
               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <div>
                   <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" data-bs-toggle="modal"
                     data-bs-target="#formUpload"><i class="fa-solid fa-file-import fa-xs"
                       style="margin-right: 8px;"></i>Import Data</button>
                 </div>
-                {{-- <div>
+                <div>
                   <form action="{{ route('delete_all') }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-lg text-white mb-0 me-0 deleteButton" type="submit"><i
                         class="fa-solid fa-trash-can"></i> Hapus Semua</button>
                   </form>
-                </div> --}}
+                </div>
               </div>
               <br>
 
