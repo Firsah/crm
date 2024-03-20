@@ -18,10 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
-        'role'
+        'role',
     ];
 
     /**
@@ -43,4 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Definisikan relasi one-to-many ke model Penjualan
+    public function penjualans(){
+        return $this->hasMany(penjualan::class);
+    }
 }

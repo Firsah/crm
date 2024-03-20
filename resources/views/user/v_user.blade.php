@@ -49,7 +49,7 @@
                     @endif
 
                      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                      <div>php
+                      <div>
                           <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" data-bs-toggle="modal" data-bs-target="#formTambahUser"><i class="fa-solid fa-plus fa-xs" style="margin-right: 8px;"></i>User Baru</button>
                       </div>
                      </div>
@@ -64,11 +64,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                        <form action="{{route('auth.storeUser') }}" method="post" class="form-sample"> 
+                        <form action="{{route('listUser.storeUser') }}" method="post" class="form-sample"> 
                             @csrf
                             <div class="form-group">
-                                <label for="name" style="font-size: 16px;">Nama<span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="name" placeholder="Input Nama Anda">
+                                <label for="username" style="font-size: 16px;">Username<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" id="username" placeholder="Input Username">
                                 </div>
                                 <div class="form-group">
                                     <label for="role" style="font-size: 16px;">Role<span style="color: red;">*</span></label>
@@ -118,7 +118,7 @@
                                     <thead>
                                       <tr style="font-size: 90%;">
                                         <th>#</th>
-                                        <th>Nama</th>
+                                        <th>username</th>
                                         <th>Role</th>
                                         <th>Email</th>
                                         <th>Created_at</th>
@@ -133,7 +133,7 @@
                                     @foreach($data as $d)
                                       <tr style="font-size: 90%;">
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $d->name  }}</td>
+                                        <td>{{ $d->username  }}</td>
                                         <td>{{ $d->role  }}</td>
                                         <td>{{ $d->email }}</td>
                                         <td>{{ $d->created_at}}</td>

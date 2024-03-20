@@ -16,6 +16,14 @@ class DataPenjualanImportClass implements ToModel, WithHeadingRow
     * @param array $row
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+
+    protected $user_id;
+
+    public  function __construct($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
     public function model(array $row)
     {
 
@@ -43,7 +51,8 @@ class DataPenjualanImportClass implements ToModel, WithHeadingRow
             'no_telp' => $row['no_telp'],
             'quantity' => $row['quantity'],
             'harga' => $row['harga'],
-            'total' => $total
+            'total' => $total,
+            'user_id' => $this->user_id,
         ]);
 
         //dd($row);

@@ -12,20 +12,19 @@
               </div>
               <h4>Hello! let's get started</h4>
               <h6 class="fw-light">Sign in to continue.</h6>
-              <form action="{{ route('auth.storeLogin') }}" method="post" class="pt-3">
+              <form action="{{ route('storeLogin') }}" method="post" class="pt-3">
+               @csrf
                 <div class="form-group" >
-                  <input type="text" class="form-control form-control" id="exampleInputEmail1"
-                    placeholder="Input Username">
+                  <input type="text" class="form-control form-control" placeholder="Input Username" name="username">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control" id="exampleInputPassword1"
-                    placeholder="Input Password">
+                  <input type="password" class="form-control form-control" placeholder="Input Password" name="password">
                 </div>
                 <div class="my-2 d-flex justify-content-end align-items-center">
                   <a href="#" class="auth-link text-black">Forgot password?</a>
                 </div>
                 <div class="mt-3">
-                  <button type="submit" class="btn btn-primary text-bold" href="{{ route('admin.index') }}">Sign In</button>
+                  <button type="submit" class="btn btn-primary text-bold">Sign In</button>
                 </div>
               </form>
             </div>
@@ -40,3 +39,23 @@
 
 
 @include('dash.footer')
+
+@if ($message = Session::get('failed'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "info",
+        title: "{{$message}}"
+        });
+</script>
+@endif
