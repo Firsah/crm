@@ -2,77 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\penjualan;
 
-use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
+use App\Imports\DataPenjualanImportClass;
+use App\Exports\DataPenjualanExportClass;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class userController extends Controller
 {
     public function index()
     {
-        $data = User::all();
-        return view('user.v_user', ['data' => $data]);
+        $jdl = "List Profil";
+        return view('user.index', ['jdl' => $jdl]);
     }
-
-    public function store_user(Request $request)
+    public function edit()
     {
-        $this->validate($request, [
-            'username' =>  'required',
-            'role' =>  'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed'
-        ]);
-
-        //Jika validasi berhasil, lanjutkan dengan menyimpan data pengguna
-        $user = new User();
-        $user->username = $request->username;
-        $user->role =  $request->role;
-        $user->email = $request->email;
-        $user->password = password_hash($request->password, PASSWORD_DEFAULT);
-        $user->save();
-
-        return redirect()->back()->with('success', 'Tambah User berhasil');
-    }
-    public function edit($id)
-    {
-        $jdl = 'Edit Users';
-        $user = User::findOrFail($id);
-
-        return view('user.edit', compact('user', 'jdl'));
-    }
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|in:admin,user', // Pastikan rolenya valid
-        ]);
-
-        $user = User::findOrFail($id);
-        $user->username = $validatedData['username'];
-        $user->email = $validatedData['email'];
-        $user->role = $validatedData['role'];
-
-        // Jika password diisi, maka kita hash password baru
-        if ($request->filled('password')) {
-            $user->password = bcrypt($validatedData['password']);
-        }
-
-        $user->save();
-
-        return redirect()->route('listUser.index')->with('success', 'User updated successfully');
-    }
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return redirect()->route('listUser.index')->with('success', 'User deleted successfully');
-    }
-    public function detail($id)
-    {
-        $user = User::findOrFail($id);
-        return view('user.detail', compact('user'));
+        $jdl = "List Profil";
+        return view('user.edit', ['jdl' => $jdl]);
     }
 }
