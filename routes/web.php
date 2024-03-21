@@ -4,6 +4,9 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\uploadExcelController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\UserController;
+
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -36,4 +39,14 @@ Route::prefix('admin')->group(function () {
     Route::delete('deleteAll', [uploadExcelController::class, 'delete_all'])->name('delete_all');
     Route::post('storeMin', [uploadExcelController::class, 'store_min'])->name('store_min');
     Route::get('export', [uploadExcelController::class, 'store_export'])->name('store_export');
+});
+
+
+Route::prefix('profil')->group(function () {
+    Route::get('/', [ProfilController::class, 'index'])->name('profil');
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('user');
+    Route::get('edit', [UserController::class, 'edit'])->name('edit');
 });
