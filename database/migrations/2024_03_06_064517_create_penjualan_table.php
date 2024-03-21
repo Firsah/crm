@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            $table->date('Tanggal');
-            $table->string('Nama');
-            $table->string('Alamat');
-            $table->string('Produk');
-            $table->string('No Telp',15);
-            $table->integer('Quantity');
-            $table->decimal('Harga',10,2);
-            $table->decimal('Total',10,2);
+            $table->user('user_id');
+            $table->date('tanggal');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('produk');
+            $table->string('no_telp', 15);
+            $table->integer('quantity');
+            $table->decimal('harga', 10, 2);
+            $table->decimal('total', 10, 2);
             $table->timestamps();
         });
     }
@@ -43,4 +44,3 @@ return new class extends Migration
     b). 2: Parameter ketiga menunjukkan jumlah digit setelah titik desimal. Dalam hal ini, ada 2 digit setelah titik desimal. Ini menentukan presisi dari angka
         desimal yang dapat disimpan dalam kolom tersebut.
 */
-

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\penjualan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -11,11 +12,22 @@ class DashboardController extends Controller
     {
         $jdl = "Dashboard";
 
-        // Mengambil semua data penjualan
-        $penjualan = Penjualan::all();
+        // // Mengambil semua data penjualan
+        //$penjualan = Penjualan::all();
 
-        // Mengelompokkan data penjualan berdasarkan nomor telepon
-        $leaderboard = $penjualan->groupBy('no_telp')->map(function ($group) {
+        $penjualanZymuno = null; 
+
+         //periksa peran pengguna  yang sedang login
+            if(Auth::user()->role == 'user' || Auth::user()->role == 'admin'){
+                $penjualan = penjualan::where('user_id',Auth::id())->get();
+                $penjualanEtawalin = penjualan::where('user_id',Auth::id())->where('produk', 'Etawalin')->get();
+                $penjualanZymuno = penjualan::where('user_id',Auth::id())->where('produk','zymuno')->get();
+                $penjualanGeneros = Penjualan::where('user_id',Auth::id())->where('produk','Generos')->get();
+                $penjualanFreshmage = Penjualan::where('user_id',Auth::id())->where('produk', 'Freshmage')->get();
+            }
+
+            // Mengelompokkan data penjualan berdasarkan nomor telepon
+            $leaderboard = $penjualan->groupBy('no_telp')->map(function ($group) {
             // Mengelompokkan pembelian berdasarkan produk
             $grouped_purchases = $group->groupBy('produk')->map(function ($purchases) {
                 return [
@@ -34,8 +46,8 @@ class DashboardController extends Controller
             ];
         })->sortByDesc('total_pembelian')->take(10);
 
-        $penjualanEtawalin = Penjualan::where('produk', 'Etawalin')->get();
 
+        //----leaderboardEtawalin----
         // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
         $leaderboardEtawalin = $penjualanEtawalin->groupBy('no_telp')->map(function ($group) {
             return [
@@ -46,8 +58,8 @@ class DashboardController extends Controller
             ];
         })->sortByDesc('total_pembelian')->take(10);
 
-        $penjualanZymuno = Penjualan::where('produk', 'Zymuno')->get();
 
+        //----leaderboardZymuno----
         // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
         $leaderboardZymuno = $penjualanZymuno->groupBy('no_telp')->map(function ($group) {
             return [
@@ -58,8 +70,8 @@ class DashboardController extends Controller
             ];
         })->sortByDesc('total_pembelian')->take(10);
 
-        $penjualanGeneros = Penjualan::where('produk', 'Generos')->get();
-
+        
+        //----leaderboarGeneros----
         // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
         $leaderboardGeneros = $penjualanGeneros->groupBy('no_telp')->map(function ($group) {
             return [
@@ -70,6 +82,8 @@ class DashboardController extends Controller
             ];
         })->sortByDesc('total_pembelian')->take(10);
 
+       
+        //----leaderboarFreshmag----
         $penjualanFreshmag = Penjualan::where('produk', 'Freshmag')->get();
         // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
         $leaderboardFreshmag = $penjualanFreshmag->groupBy('no_telp')->map(function ($group) {

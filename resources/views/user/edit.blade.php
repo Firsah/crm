@@ -7,22 +7,31 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Edit User</h4>
-                        <form class="forms-sample">
+                        <form method="POST" action="{{ route('user.update', $user->id) }}">
+                            @csrf
+                            @method('PUT')
                             <div class="form-group">
-                                <label for="exampleInputUsername1">Username</label>
-                                <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{ $user->username }}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{ $user->email }}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <label for="role" style="font-size: 16px;">Role<span style="color: red;">*</span></label>
+                                <select name="role" id="role" class="form-select">
+                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputConfirmPassword1">Confirm Password</label>
-                                <input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Password">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="conf-password">Confirm Password</label>
+                                <input type="password" class="form-control" name="password_confirmation" id="conf-password" placeholder="Password">
                             </div>
                             <div class="form-check form-check-flat form-check-primary">
                                 <label class="form-check-label">

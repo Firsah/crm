@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
 use App\Imports\DataPenjualanImportClass;
 use App\Exports\DataPenjualanExportClass;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,7 +20,15 @@ class uploadExcelController extends Controller
     {
         $jdl = "Upload Data";
 
-        $data = penjualan::all();
+        // $data = penjualan::all();
+        $data = null;
+
+        //periksa  peran pengguna  yang sedang login
+        if (Auth::user()->role == 'user' || Auth::user()->role == 'admin') {
+            // Jika pengguna adalah 'user', ambil hanya data yang sesuai dengan user yang sedang login
+            $data = penjualan::where('user_id',Auth::id())->get();
+        }
+       
 
         //Mengelompokan data  berdasarkan nomer  Telepon
         $groupData = $data->groupBy('no_telp');
@@ -53,6 +62,9 @@ class uploadExcelController extends Controller
 
     public  function store_file(Request $request)
     {
+        // Memastikan bahwa hanya pengguna yang masuk yang dapat mengakses rute ini
+        $this->middleware('auth');
+
         $this->validate(
             $request,
             [
@@ -73,25 +85,39 @@ class uploadExcelController extends Controller
         // Menyimpan file dengan nama yang sama dengan nama asli
         $file->move(public_path('excel'), $originName);
 
-        //Memproses File Excel dan  menyimpannya di database
-        Excel::import(new DataPenjualanImportClass, public_path('excel/' . $originName));
+        //Memeriksa  peran pengguna sebelum mengimpor file
+        $user = Auth::user();
+        if ($user && ($user->role == 'admin' || $user->role == 'user')) {
+            $user_id = Auth::id();
+            //Memproses File Excel dan  menyimpannya di database
+            Excel::import(new DataPenjualanImportClass($user_id), public_path('excel/' . $originName));
+            return redirect()->route('dashboard');
+        }else{
+                // Jika pengguna tidak memiliki izin, beri tahu mereka dengan pesan kesalahan
+                return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengunggah file.');
+            }        
+        }
+    
 
-
-        return redirect()->route('index')->with('success', 'Data Behasil Diimport!!');
-    }
-
-    public  function delete_all()
+    public function delete_all()
     {
+        $user_id = Auth::id(); 
+        // dd($user_id);
 
-        // Menghapus semua data dari tabel penjualan
-        penjualan::truncate();
 
+        // Menghapus semua data penjualan yang memiliki user_id tertentu
+        Penjualan::where('user_id', $user_id)->delete();
+        
         // Menghapus semua file dari direktori public/excel/
         $files = glob(public_path('excel/*'));
         foreach ($files as $file) {
             if (is_file($file))
                 unlink($file); //Hapus File
         }
+
+        // // Menghapus semua data dari tabel penjualan
+        // penjualan::truncate();
+
         return  redirect()->back()->with('success', 'Data Behasil Di Hapus  Semua');
     }
 
@@ -158,12 +184,12 @@ class uploadExcelController extends Controller
             'Etawaku',
         ];
 
-        //Gabungkan data kemunculan produk dengan nama produk yang telah ditentukan
-        $combineData = [];
-        foreach ($namaProduk as  $np) {
-            $combineData[$np] = $produkCount->get($np, 0);
-        }
-
+            //Gabungkan data kemunculan produk dengan nama produk yang telah ditentukan
+            $combineData = [];
+             foreach( $namaProduk as  $np){
+                $combineData[$np] = $produkCount->get($np,0);
+             }
+ 
         // dd($finalData);
         return view('upload.index', ['jdl' => $jdl, 'finalData' => $finalData, 'data' => $data, 'combineData' => $combineData]);
     }

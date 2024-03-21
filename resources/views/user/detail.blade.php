@@ -21,7 +21,7 @@
                                 <img src="{{ asset('assets/images/user.png') }}" alt="Profile Picture" class="rounded-circle profile-picture">
                             </div>
                             <br>
-                            <h4 class="card-title">{{ Auth::user()->username }}</h4>
+                            <h4 class="card-title">{{ $user->username }}</h4>
                         </div>
                     </div>
                 </div>
@@ -31,14 +31,14 @@
                     <div class="card-body">
                         <h4 class="card-title">Nama</h4>
                         <p class="card-description">
-                            {{ Auth::user()->username }}
+                            {{ $user->username }}
                         </p>
                         <div class="row">
                             <div class="col-md-6">
                                 <address>
                                     <p class="fw-bold">Role</p>
                                     <p>
-                                        {{ Auth::user()->role }}
+                                        {{ $user->role }}
                                     </p>
                                     <p>
                                         Digitalk Insight
@@ -51,7 +51,7 @@
                                         E-mail
                                     </p>
                                     <p class="mb-2">
-                                        {{ Auth::user()->email }}
+                                        {{ $user->email }}
                                     </p>
                                     <p class="fw-bold">
                                         Nomor HP

@@ -19,7 +19,11 @@
     <div class="navbar-menu-wrapper d-flex align-items-top">
       <ul class="navbar-nav">
         <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-          <h1 class="welcome-text">Selamat Datang, <span class="text-black fw-bold">John Doe</span></h1>
+          <h1 class="welcome-text">Selamat Datang,
+            @if(Auth::check())
+            <span class="text-black fw-bold">{{ Auth::user()->username }}</span>
+            @endif
+          </h1>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
@@ -29,12 +33,12 @@
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
             <div class="dropdown-header text-center">
               <img class="img-md rounded-circle" src="{{ asset('assets/images/user.png') }}" alt="Profile image" width="50" height="50">
-              <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-              <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+              <p class="mb-1 mt-3 font-weight-semibold">@if(Auth::check()) {{ Auth::user()->username }} @endif</p>
+              <p class="fw-light text-muted mb-0">@if(Auth::check()) {{ Auth::user()->email }} @endif</p>
             </div>
             <a href="{{ route('profil') }}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My
               Profile</a>
-            <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+            <a href="{{ route('logout') }}" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
           </div>
         </li>
       </ul>
@@ -43,7 +47,7 @@
       </button>
     </div>
   </nav>
-  <!-- partial -->
+
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_settings-panel.html -->
     <div class="theme-setting-wrapper">
@@ -70,16 +74,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('index')}}">
+          <a class="nav-link" href="{{ route('uploadData.index')}}">
             <i class="mdi mdi-cloud-upload menu-icon"></i>
             <span class="menu-title">Upload Data</span>
           </a>
         </li>
+        @if(Auth::check() && Auth::user()->role == 'admin')
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('user')}}">
-            <i class="menu-icon mdi mdi-account-circle-outline"></i>
-            <span class="menu-title">List User</span>
+          <a class="nav-link" href="{{ route('listUser.index') }}">
+            <i class="menu-icon mdi mdi-account-circle-outline""></i>
+            <span class=" menu-title">Data User</span>
           </a>
         </li>
+        @endif
       </ul>
     </nav>
