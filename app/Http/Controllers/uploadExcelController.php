@@ -57,27 +57,7 @@ class uploadExcelController extends Controller
             return $b['total'] - $a['total'];
         });
 
-
-        //SCRIPTMENGHITUNG KEMUNCULAN DATA  BERDASARKAN NAMA  PRODUK
-        // Hitung  total kemunculan setiap produk
-        $produkCount = $data->groupBy('produk')->map->count();
-
-        //Menentukan nama-nama produk yang sudah ditentukan secara statis dalam HTML
-        $namaProduk = [
-            'Zymuno',
-            'Generos',
-            'Freshmage',
-            'Etawalin',
-            'Etawaku',
-        ];
-
-        //Gabungkan data kemunculan produk dengan nama produk yang telah ditentukan
-        $combineData = [];
-        foreach ($namaProduk as  $np) {
-            $combineData[$np] = $produkCount->get($np, 0);
-        }
-
-        return view('upload.index', ['data' =>  $data, 'finalData' => $finalData, 'jdl' => $jdl, 'combineData' => $combineData]);
+        return view('upload.index', ['data' =>  $data, 'finalData' => $finalData, 'jdl' => $jdl]);
     }
 
     public  function store_file(Request $request)

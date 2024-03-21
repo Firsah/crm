@@ -42,21 +42,6 @@
                 </div> -->
           <div class="tab-content tab-content-basic">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-              <!-- Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card-produk">
-                    @foreach($combineData as $produk => $count)
-                    <div class="card-produk-info">
-                      <p class="statistics-title">{{ $produk }}</p>
-                      <h3 class="rate-percentage"> {{ $count }}</h3>
-                    </div>
-                    @endforeach
-                  </div>
-                </div>
-              </div>
-              <!-- //Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
-
               <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                 <div>
                   <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" data-bs-toggle="modal"
@@ -121,7 +106,6 @@
                             <thead>
                               <tr style="font-size: 90%;">
                                 <th>#</th>
-                                <th>user id</th>
                                 <th>Tanggal</th>
                                 <th>Nama</th>
                                 <th>Alamat</th>
@@ -140,7 +124,6 @@
                               @foreach($data as $d)
                               <tr style="font-size: 90%;">
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $d->user_id }}</td>
                                 <td>{{ $d->tanggal }}</td>
                                 <td>{{ $d->nama }}</td>
                                 <td>{{ $d->alamat }}</td>

@@ -84,8 +84,9 @@ class DashboardController extends Controller
 
        
         //----leaderboarFreshmag----
+        $penjualanFreshmag = Penjualan::where('produk', 'Freshmag')->get();
         // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
-        $leaderboardFreshmage = $penjualanFreshmage->groupBy('no_telp')->map(function ($group) {
+        $leaderboardFreshmag = $penjualanFreshmag->groupBy('no_telp')->map(function ($group) {
             return [
                 'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
                 'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
@@ -94,6 +95,96 @@ class DashboardController extends Controller
             ];
         })->sortByDesc('total_pembelian')->take(10);
 
-        return view('dashboard.index', compact('jdl', 'leaderboard', 'leaderboardEtawalin', 'leaderboardZymuno', 'leaderboardGeneros', 'leaderboardFreshmage'));
+        $penjualanBio = Penjualan::where('produk', 'Bio Insuleaf')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardBio = $penjualanBio->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        $penjualanGizidat = Penjualan::where('produk', 'Gizidat')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardGizidat = $penjualanGizidat->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        $penjualanNutriflakes = Penjualan::where('produk', 'Nutriflakes')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardNutriflakes = $penjualanNutriflakes->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        $penjualanEtawaku = Penjualan::where('produk', 'Etawaku Platinum')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardEtawaku = $penjualanEtawaku->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        $penjualanFreshvision = Penjualan::where('produk', 'Fresh Vision')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardFreshvision = $penjualanFreshvision->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        $penjualanWeightherba = Penjualan::where('produk', 'Weight Herba')->get();
+        // Menghitung total pembelian dan jumlah transaksi untuk setiap nama
+        $leaderboardWeightherba = $penjualanWeightherba->groupBy('no_telp')->map(function ($group) {
+            return [
+                'nama' => $group->first()->nama, // Ambil nama dari salah satu transaksi
+                'no_telp' => $group->first()->no_telp, // Ambil nomor telepon dari salah satu transaksi
+                'total_pembelian' => $group->sum('total'),
+                'jumlah_transaksi' => $group->sum('quantity'),
+            ];
+        })->sortByDesc('total_pembelian')->take(10);
+
+        //SCRIPTMENGHITUNG KEMUNCULAN DATA  BERDASARKAN NAMA  PRODUK
+        // Hitung  total kemunculan setiap produk
+        $produkCount = $penjualan->groupBy('produk')->map->count();
+
+        //Menentukan nama-nama produk yang sudah ditentukan secara statis dalam HTML
+        $namaProduk = [
+            'Zymuno',
+            'Generos',
+            'Freshmag',
+            'Etawalin',
+            'Etawaku Platinum',
+            'Bio Insuleaf',
+            'Gizidat',
+            'Nutriflakes',
+            'Fresh Vision',
+            'Weight Herba',
+        ];
+
+        //Gabungkan data kemunculan produk dengan nama produk yang telah ditentukan
+        $combineData = [];
+        foreach ($namaProduk as  $np) {
+            $combineData[$np] = $produkCount->get($np, 0);
+        }
+
+        return view('dashboard.index', compact('jdl', 'combineData', 'leaderboard', 'leaderboardEtawalin', 'leaderboardZymuno', 'leaderboardGeneros', 'leaderboardFreshmag', 'leaderboardBio', 'leaderboardGizidat', 'leaderboardNutriflakes', 'leaderboardEtawaku', 'leaderboardFreshvision', 'leaderboardWeightherba'));
     }
 }

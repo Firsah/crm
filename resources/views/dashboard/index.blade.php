@@ -30,19 +30,20 @@
                 <div class="home-tab">
                     <div class="tab-content tab-content-basic">
                         <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
-                            {{--
                             <!-- Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="card-produk">
+                                        @foreach($combineData as $produk => $count)
                                         <div class="card-produk-info">
-                                            <p class="statistics-title">judul</p>
-                                            <h3 class="rate-percentage">isi</h3>
+                                            <p class="statistics-title">{{ $produk }}</p>
+                                            <h3 class="rate-percentage"> {{ $count }}</h3>
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
-                            <!-- //Row : Informasi Singkat Tentang Penjualan Produk Terbanyak --> --}}
+                            <!-- //Row : Informasi Singkat Tentang Penjualan Produk Terbanyak -->
 
                             <!-- Row : Data yang sudah di olah -->
                             <div class="row">
@@ -206,7 +207,7 @@
                                 <div class="col-lg-6 grid-margin stretch-card">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="card-title">Leaderbaord Freshmage</h4>
+                                            <h4 class="card-title">Leaderbaord Freshmag</h4>
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead>
@@ -219,7 +220,211 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($leaderboardFreshmage as $index => $data)
+                                                        @foreach($leaderboardFreshmag as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Bio Insuleaf</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardBio as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Gizidat</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardGizidat as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Nutriflakes</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardNutriflakes as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Etawaku Platinum</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardEtawaku as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Fresh Vision</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardFreshvision as $index => $data)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data['nama'] }}</td>
+                                                            <td>{{ $data['no_telp'] }}</td>
+                                                            <td>{{ $data['jumlah_transaksi'] }}</td>
+                                                            <td>
+                                                                Rp {{ number_format($data['total_pembelian'],0,',','.')
+                                                                }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Leaderbaord Weight Herba</h4>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nama</th>
+                                                            <th>No Telp</th>
+                                                            <th>Quantity</th>
+                                                            <th>Total Pembelian</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($leaderboardWeightherba as $index => $data)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data['nama'] }}</td>
